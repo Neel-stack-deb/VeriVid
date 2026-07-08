@@ -94,7 +94,7 @@ temp/
 cache/
 artifacts/
 transcripts/
-
+audio/
 # # Model / ML artifacts (if agents use ML)
 # models/
 # checkpoints/

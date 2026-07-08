@@ -1,9 +1,9 @@
 [project]
 name = "verivid"
 version = "0.1.0"
-description = "Add your description here"
+description = "Users upload a short-to-medium video → the system performs multimodal analysis → a council of agents debates and verifies the insights → outputs professional-grade results in multiple styles, plus an accessibility-friendly version. It intelligently routes work to minimize cost while leveraging AMD MI300X for heavy lifting."
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "fastapi>=0.139.0",
     "pydantic-settings>=2.14.2",

@@ -93,14 +93,15 @@ tmp/
 temp/
 cache/
 artifacts/
+transcripts/
 
-# Model / ML artifacts (if agents use ML)
-models/
-checkpoints/
-*.ckpt
-*.pt
-*.pth
-*.onnx
+# # Model / ML artifacts (if agents use ML)
+# models/
+# checkpoints/
+# *.ckpt
+# *.pt
+# *.pth
+# *.onnx
 
 # Databases / local state
 *.db

@@ -1,6 +1,7 @@
 from app.core.config import settings 
 from fastapi import FastAPI
 from app.api import health
+from app.api import upload
 app = FastAPI(
     title=settings.app_name,
     description="VeriVid API",
@@ -9,6 +10,9 @@ app = FastAPI(
 
 app.include_router(
     router = health.router
+)
+app.include_router(
+    router = upload.router
 )
 
 def main():

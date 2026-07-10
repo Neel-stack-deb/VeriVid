@@ -5,8 +5,6 @@ description = "Users upload a short-to-medium video → the system performs mult
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "fastapi>=0.139.0",
+    "fastapi[standard]>=0.139.0",
     "pydantic-settings>=2.14.2",
-    "python-multipart>=0.0.32",
-    "uvicorn>=0.51.0",
 ]

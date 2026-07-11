@@ -4,10 +4,11 @@ from pydantic import BaseModel
 
 from app.schemas.video_metadata import VideoMetadata
 from app.schemas.video_workspace import VideoWorkspace
+from app.schemas.transcript import Transcript
 
 class VideoArtifacts(BaseModel):
     workspace: VideoWorkspace
     metadata: VideoMetadata | None = None
     frame_paths: list[Path] = []
     audio_path: Path | None = None
-    transcript: str | None = None
+    transcript: Transcript | None = None

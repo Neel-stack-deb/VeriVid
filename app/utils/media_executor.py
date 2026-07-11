@@ -2,7 +2,7 @@ import subprocess
 
 from app.exceptions.media import MediaProcessingError
 
-
+#TODO: Consider refactoring the service classes to use the MediaExecutor for executing FFmpeg commands, to avoid code duplication and centralize error handling.
 class MediaExecutor:
     """
     Executes media processing commands (FFmpeg / FFprobe)

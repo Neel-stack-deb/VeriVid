@@ -9,10 +9,10 @@ class FrameService:
 
     @staticmethod
     def extract_frames(artifacts: VideoArtifacts) -> VideoArtifacts:
-        video_path = artifacts.video_path
-        output_directory = Path("data/frames") / video_path.stem
+        video_path = artifacts.workspace.video_path
+        output_directory = artifacts.workspace.frames_dir
         output_directory.mkdir(parents=True, exist_ok=True)
-
+        
         output_pattern = output_directory / "frame_%04d.jpg"
 
         command = [

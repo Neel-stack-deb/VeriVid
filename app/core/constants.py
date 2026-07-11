@@ -20,5 +20,7 @@ ALLOWED_VIDEO_MIME_TYPES = {
     "video/webm",
 }
 
-FRAME_SAMPLE_INTERVAL = 3  # seconds
-STORAGE_DIR = Path("data/uploads")
+FRAME_SAMPLE_INTERVAL = 3 
+ # seconds
+DATA_DIR = Path("data")
+VIDEOS_DIR = DATA_DIR / "videos"

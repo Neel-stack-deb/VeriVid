@@ -1,17 +1,16 @@
-from pathlib import Path
-
 from app.schemas.video_artifacts import VideoArtifacts
 from app.services.frame_service import FrameService
 from app.services.metadata_service import MetadataService
+from app.schemas.video_workspace import VideoWorkspace
 
 
 class VideoPipeline:
 
     @staticmethod
-    def process(video_path: Path) -> VideoArtifacts:
+    def process(workspace : VideoWorkspace) -> VideoArtifacts:
 
         artifacts = VideoArtifacts(
-            video_path=video_path
+            workspace=workspace
         )
 
         artifacts = MetadataService.process(artifacts)

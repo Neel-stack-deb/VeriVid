@@ -10,7 +10,11 @@ class MetadataService:
 
     @staticmethod
     def extract(artifacts: VideoArtifacts) -> VideoArtifacts:
-        video_path = artifacts.video_path
+        video_path = artifacts.workspace.video_path
+        metadata_path = (
+            artifacts.workspace.metadata_dir /
+            "metadata.json"
+        )
         command = [
             "ffprobe",
             "-v", "quiet",
@@ -60,6 +64,11 @@ class MetadataService:
             height=video_stream["height"],
             fps=fps,
             codec=video_stream["codec_name"],
+        )
+
+        metadata_path.write_text(
+            artifacts.metadata.model_dump_json(indent=4),
+            encoding="utf-8",
         )
 
         return artifacts

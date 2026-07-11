@@ -24,11 +24,18 @@ class FrameService:
             "-y",
         ]
 
-        subprocess.run(
-            command,
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+        try:
+            subprocess.run(
+                command,
+                check=True,
+                text=True,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.PIPE, # Capture error stream in memory buffer
+            )
+        except subprocess.CalledProcessError as error:
+            # Now you have access to the exact message FFmpeg spit out!
+            print(f"FFmpeg failed with code {error.returncode}.")
+            print(f"Reason: {error.stderr}")
+            raise error
 
         return sorted(output_directory.glob("*.jpg"))

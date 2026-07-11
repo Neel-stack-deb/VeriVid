@@ -5,7 +5,7 @@ class Settings(BaseSettings):
         env_file=".env",
         env_file_encoding="utf-8",
     )
-    
+    whisper_model: str = "openai/whisper-base"
     app_name: str = "VeriVid"
     
 settings = Settings()

@@ -5,6 +5,10 @@ description = "Users upload a short-to-medium video → the system performs mult
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "accelerate>=1.14.0",
     "fastapi[standard]>=0.139.0",
+    "librosa>=0.11.0",
     "pydantic-settings>=2.14.2",
+    "torch>=2.13.0",
+    "transformers>=5.13.1",
 ]

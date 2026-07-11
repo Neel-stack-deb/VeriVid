@@ -2,7 +2,7 @@ from pathlib import Path
 import subprocess
 
 from app.core.constants import FRAME_SAMPLE_INTERVAL
-
+from app.exceptions.frame import FrameExtractionError
 
 class FrameService:
 
@@ -36,6 +36,8 @@ class FrameService:
             # Now you have access to the exact message FFmpeg spit out!
             print(f"FFmpeg failed with code {error.returncode}.")
             print(f"Reason: {error.stderr}")
-            raise error
+            raise FrameExtractionError(
+                f"Failed to extract frames from {video_path.name}"
+            ) from error
 
         return sorted(output_directory.glob("*.jpg"))

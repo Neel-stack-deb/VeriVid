@@ -3,7 +3,7 @@ import subprocess
 from pathlib import Path
 
 from app.schemas.video_metadata import VideoMetadata
-
+from app.exceptions.metadata import MetadataExtractionError
 
 class MetadataService:
 
@@ -19,12 +19,18 @@ class MetadataService:
             str(video_path),
         ]
 
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
+        try:
+            result = subprocess.run(
+                command,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+
+        except subprocess.CalledProcessError as e:
+            raise MetadataExtractionError(
+                f"Failed to extract metadata from {video_path.name}"
+            ) from e
 
         metadata = json.loads(result.stdout)
 
@@ -36,7 +42,7 @@ class MetadataService:
         )
 
         if not video_stream:
-            raise ValueError(f"No video stream found in the file: {video_path.name}")
+            raise MetadataExtractionError(f"No video stream found in the file: {video_path.name}")
 
         numerator, denominator = map(
             int,

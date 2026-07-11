@@ -1,3 +1,5 @@
+from pathlib import Path
+
 UPLOAD_CHUNK_SIZE = 1024 * 1024  # 1 MB
 
 MAX_VIDEO_SIZE = 500 * 1024 * 1024  # 500 MB
@@ -19,3 +21,4 @@ ALLOWED_VIDEO_MIME_TYPES = {
 }
 
 FRAME_SAMPLE_INTERVAL = 3  # seconds
+UPLOAD_DIRECTORY = Path("data/uploads")

@@ -4,5 +4,5 @@ from pydantic import BaseModel
 
 
 class VisionRequest(BaseModel):
-    image_path: Path
+    frame_path: Path
     prompt: str

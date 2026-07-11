@@ -17,3 +17,5 @@ ALLOWED_VIDEO_MIME_TYPES = {
     "video/x-matroska",
     "video/webm",
 }
+
+FRAME_SAMPLE_INTERVAL = 3  # seconds

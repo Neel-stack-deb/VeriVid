@@ -4,12 +4,13 @@ from pathlib import Path
 
 from app.schemas.video_metadata import VideoMetadata
 from app.exceptions.metadata import MetadataExtractionError
+from app.schemas.video_artifacts import VideoArtifacts
 
 class MetadataService:
 
     @staticmethod
-    def extract(video_path: Path) -> VideoMetadata:
-
+    def extract(artifacts: VideoArtifacts) -> VideoArtifacts:
+        video_path = artifacts.video_path
         command = [
             "ffprobe",
             "-v", "quiet",
@@ -51,7 +52,7 @@ class MetadataService:
 
         fps = numerator / denominator
 
-        return VideoMetadata(
+        artifacts.metadata =  VideoMetadata(
             filename=video_path.name,
             duration=float(metadata["format"]["duration"]),
             size=int(metadata["format"]["size"]),
@@ -60,3 +61,5 @@ class MetadataService:
             fps=fps,
             codec=video_stream["codec_name"],
         )
+
+        return artifacts

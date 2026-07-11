@@ -3,12 +3,13 @@ import subprocess
 
 from app.core.constants import FRAME_SAMPLE_INTERVAL
 from app.exceptions.frame import FrameExtractionError
+from app.schemas.video_artifacts import VideoArtifacts
 
 class FrameService:
 
     @staticmethod
-    def extract_frames(video_path: Path) -> list[Path]:
-
+    def extract_frames(artifacts: VideoArtifacts) -> VideoArtifacts:
+        video_path = artifacts.video_path
         output_directory = Path("data/frames") / video_path.stem
         output_directory.mkdir(parents=True, exist_ok=True)
 
@@ -40,4 +41,5 @@ class FrameService:
                 f"Failed to extract frames from {video_path.name}"
             ) from error
 
-        return sorted(output_directory.glob("*.jpg"))
+        artifacts.frame_paths = sorted(output_directory.glob("*.jpg"))
+        return artifacts

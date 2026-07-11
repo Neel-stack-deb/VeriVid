@@ -10,12 +10,11 @@ class VideoPipeline:
     @staticmethod
     def process(video_path: Path) -> VideoArtifacts:
 
-        metadata = MetadataService.extract(video_path)
-
-        frames = FrameService.extract_frames(video_path)
-
-        return VideoArtifacts(
-            video_path=video_path,
-            metadata=metadata,
-            frame_paths=frames,
+        artifacts = VideoArtifacts(
+            video_path=video_path
         )
+
+        artifacts = MetadataService.process(artifacts)
+        artifacts = FrameService.process(artifacts)
+
+        return artifacts

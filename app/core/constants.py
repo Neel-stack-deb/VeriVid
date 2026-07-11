@@ -21,4 +21,4 @@ ALLOWED_VIDEO_MIME_TYPES = {
 }
 
 FRAME_SAMPLE_INTERVAL = 3  # seconds
-UPLOAD_DIRECTORY = Path("data/uploads")
+STORAGE_DIR = Path("data/uploads")

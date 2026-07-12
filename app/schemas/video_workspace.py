@@ -15,3 +15,4 @@ class VideoWorkspace(BaseModel):
     transcript_dir: Path
     report_dir: Path
     scenes_dir: Path
+    knowledge_dir: Path

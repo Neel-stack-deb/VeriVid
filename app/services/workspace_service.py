@@ -34,6 +34,7 @@ class WorkspaceService:
         transcript_dir = workspace_root / "transcripts"
         report_dir = workspace_root / "reports"
         scenes_dir = workspace_root / "scenes"
+        knowledge_dir = workspace_root / "knowledge"
 
         file_extension = Path(file.filename).suffix.lower()
 
@@ -50,6 +51,7 @@ class WorkspaceService:
                 transcript_dir,
                 report_dir,
                 scenes_dir,
+                knowledge_dir
             ]:
                 directory.mkdir(parents=True, exist_ok=True)
 

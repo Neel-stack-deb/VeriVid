@@ -1,12 +1,17 @@
-from app.schemas.video_artifacts import VideoArtifacts
-from app.ai.schemas.knowledge_request import KnowledgeRequest 
+from app.ai.schemas.knowledge_request import KnowledgeRequest
+
 
 class KnowledgeService:
 
-    def process(
+    def __init__(
         self,
-        artifacts: VideoArtifacts,
-    ) -> VideoArtifacts:
+        client,
+        persistence_service,
+    ):
+        self._client = client
+        self._persistence = persistence_service
+
+    def process(self, artifacts):
 
         request = KnowledgeRequest(
             transcript=artifacts.transcript,

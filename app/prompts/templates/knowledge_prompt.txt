@@ -61,3 +61,12 @@ Return ONLY valid JSON matching the following schema.
     }
   ]
 }
+
+Rules:
+
+- Return ONLY JSON.
+- Do not invent information.
+- Confidence must be between 0 and 1.
+- Every relationship must reference existing IDs.
+- Every participant_id must reference an entity.
+- Every evidence_id must reference an evidence object.

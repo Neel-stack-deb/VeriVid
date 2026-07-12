@@ -10,6 +10,12 @@ Do not wrap the JSON in code fences.
 
 Return JSON in exactly this format:
 
+Do NOT explain your reasoning.
+Do NOT wrap the response in markdown.
+Do NOT hallucinate information.
+Only extract information that is supported by the provided input.
+
+## Output Schema
 {
   "description": "Brief factual description of the scene.",
   "objects": [

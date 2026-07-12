@@ -1,13 +1,8 @@
-from pathlib import Path
-
+from app.prompts.loader import PromptLoader
 
 class VisionPromptBuilder:
 
-    _PROMPT_PATH = (
-        Path(__file__).parent.parent
-        / "templates"
-        / "vision_prompt.txt"
-    )
+    _PROMPT_PATH = PromptLoader.load("vision_prompt.txt")
 
     @classmethod
     def build(cls) -> str:

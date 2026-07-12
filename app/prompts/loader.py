@@ -2,7 +2,7 @@ from pathlib import Path
 
 
 class PromptLoader:
-    _PROMPT_DIR = Path(__file__).parent.__truediv__("templates")
+    _PROMPT_DIR = (Path(__file__).parent/"templates")
 
     @classmethod
     def load(cls, filename: str) -> str:

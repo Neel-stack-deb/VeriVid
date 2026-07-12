@@ -6,6 +6,7 @@ from app.services.audio_service import AudioService
 from app.services.whisper_service import WhisperService
 from app.services.vision_service import VisionService
 from app.ai.registry import vision_client
+from app.services.knowledge_service import KnowledgeService
 
 class VideoPipeline:
 
@@ -23,5 +24,6 @@ class VideoPipeline:
         artifacts = VisionService(
                         vision_client
                     ).process(artifacts)
+        artifacts = KnowledgeService.process(artifacts)
 
         return artifacts

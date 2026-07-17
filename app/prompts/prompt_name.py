@@ -8,3 +8,4 @@ class PromptName(str, Enum):
     CRITIC = "critic_prompt.md"
     VERIFIER = "verifier_prompt.md"
     STYLE = "style_prompt.md"
+    CONTEXT = "context_prompt.md"

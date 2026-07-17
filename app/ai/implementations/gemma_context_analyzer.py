@@ -1,6 +1,6 @@
 from app.ai.analyzers.context_analyzer import ContextAnalyzer
 from app.prompts.builders.context_prompt_builder import ContextPromptBuilder
-from app.ai.clients.inference_client import InferenceClient
+from app.ai.clients.base.inference_client import InferenceClient
 from app.ai.schemas.context_request import ContextRequest
 from app.ai.schemas.context_response import ContextResponse
 from app.schemas.debate.context_report import ContextReport

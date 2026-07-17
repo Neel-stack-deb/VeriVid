@@ -16,3 +16,4 @@ class VideoWorkspace(BaseModel):
     report_dir: Path
     scenes_dir: Path
     knowledge_dir: Path
+    debate_dir: Path

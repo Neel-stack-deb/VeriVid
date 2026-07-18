@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-from pydantic import BaseModel
+from app.ai.schemas.inference_request import InferenceRequest
+from app.ai.schemas.inference_response import InferenceResponse
 
 
 class InferenceClient(ABC):
@@ -8,6 +9,6 @@ class InferenceClient(ABC):
     @abstractmethod
     def generate(
         self,
-        request: BaseModel,
-    ):
-        pass
+        request: InferenceRequest,
+    ) -> InferenceResponse:
+        raise NotImplementedError

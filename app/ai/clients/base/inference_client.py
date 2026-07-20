@@ -1,7 +1,11 @@
 from abc import ABC, abstractmethod
+from typing import TypeVar
+
+from pydantic import BaseModel
 
 from app.ai.schemas.inference_request import InferenceRequest
-from app.ai.schemas.inference_response import InferenceResponse
+
+T = TypeVar("T", bound=BaseModel)
 
 
 class InferenceClient(ABC):
@@ -10,5 +14,5 @@ class InferenceClient(ABC):
     def generate(
         self,
         request: InferenceRequest,
-    ) -> InferenceResponse:
-        raise NotImplementedError
+    ) -> T:
+        ...

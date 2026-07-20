@@ -1,5 +1,11 @@
-from pydantic import Field
+from enum import Enum
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class AIProvider(str, Enum):
+    FIREWORKS = "fireworks"
+    AMD = "amd"
 
 
 class AISettings(BaseSettings):
@@ -9,14 +15,15 @@ class AISettings(BaseSettings):
         extra="ignore",
     )
 
-    base_url: str = Field(
-        default="http://localhost:8001/v1"
-    )
-    
-    api_key: str
-    timeout: float
+    provider: AIProvider = AIProvider.FIREWORKS
 
-    models = {
+    base_url: str
+
+    api_key: str
+
+    timeout: float = 60.0
+
+    models: dict[str, str] = {
         "vision": "Qwen/Qwen2.5-VL-7B-Instruct",
         "debate": "google/gemma-3-12b-it",
         "style": "google/gemma-3-12b-it",

@@ -12,3 +12,7 @@ class FireworksClient(OpenAICompatibleClient):
             base_url=settings.fireworks.base_url,
             api_key=settings.fireworks.api_key,
         )
+
+    def _provider_name(self) -> str:
+
+        return "Fireworks"

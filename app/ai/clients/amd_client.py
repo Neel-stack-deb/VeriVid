@@ -12,3 +12,7 @@ class AMDClient(OpenAICompatibleClient):
             base_url=settings.amd.base_url,
             api_key=settings.amd.api_key,
         )
+
+    def _provider_name(self) -> str:
+
+        return "AMD"

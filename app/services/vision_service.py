@@ -1,7 +1,7 @@
 import re
 from app.ai.clients.vision_client import VisionClient
 from app.ai.schemas.vision_request import VisionRequest
-from app.prompts.builders.vision_prompt_builder import VisionPromptBuilder
+from app.ai.prompts.builders.vision_prompt_builder import VisionPromptBuilder
 from app.schemas.scene import (
     DetectedObject,
     Scene,

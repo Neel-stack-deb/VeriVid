@@ -1,6 +1,6 @@
 from app.ai.schemas.knowledge_request import KnowledgeRequest
-from app.prompts.loader import PromptLoader
-from app.prompts.prompt_name import PromptName
+from app.ai.prompts.loader import PromptLoader
+from app.ai.prompts.prompt_name import PromptName
 
 class KnowledgePromptBuilder:
 

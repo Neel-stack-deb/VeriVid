@@ -5,7 +5,7 @@ from app.ai.schemas.knowledge_extraction_response import (
 )
 from app.ai.schemas.knowledge_request import KnowledgeRequest
 from app.core.ai_settings import ai_settings
-from app.prompts.builders.knowledge_prompt_builder import (
+from app.ai.prompts.builders.knowledge_prompt_builder import (
     KnowledgePromptBuilder,
 )
 

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
-from app.agents.domain.prompt import Prompt
+from app.ai.agents.domain.prompt import Prompt
 TRequest = TypeVar("TRequest")
 
 

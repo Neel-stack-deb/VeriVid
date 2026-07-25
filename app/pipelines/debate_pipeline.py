@@ -1,10 +1,10 @@
 from app.schemas.debate.debate_artifacts import DebateArtifacts
 from app.schemas.knowledge.knowledge_base import KnowledgeBase
 from app.services.debate_persistence_service import DebatePersistenceService
-from app.agents.context_agent import ContextAgent
-from app.agents.consensus_agent import ConsensusAgent
-from app.agents.risk_agent import RiskAgent
-from app.agents.verification_agent import VerificationAgent
+from app.ai.agents.context_agent import ContextAgent
+from app.ai.agents.consensus_agent import ConsensusAgent
+from app.ai.agents.risk_agent import RiskAgent
+from app.ai.agents.verification_agent import VerificationAgent
 
 
 class DebatePipeline:

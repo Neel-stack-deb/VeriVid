@@ -1,4 +1,4 @@
-from app.agents.knowledge_agent import KnowledgeAgent
+from app.ai.agents.knowledge_agent import KnowledgeAgent
 from app.ai.registry import reasoning_client, vision_client
 from app.ai.schemas.knowledge_request import KnowledgeRequest
 from app.schemas.video_artifacts import VideoArtifacts

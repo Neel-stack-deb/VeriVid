@@ -2,7 +2,7 @@ from app.ai.prompts.builders.base.prompt_builder import PromptBuilder
 from app.ai.schemas.verification_request import VerificationRequest
 from app.ai.prompts.loader import PromptLoader
 from app.ai.prompts.prompt_name import PromptName
-from app.agents.domain.prompt import Prompt
+from app.ai.agents.domain.prompt import Prompt
 
 class VerificationPromptBuilder(
     PromptBuilder[VerificationRequest]

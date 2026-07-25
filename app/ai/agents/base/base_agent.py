@@ -5,10 +5,9 @@ from pydantic import BaseModel
 
 from app.ai.clients.base.inference_client import InferenceClient
 from app.ai.prompts.builders.base.prompt_builder import PromptBuilder
-from app.agents.domain.ai_model import AIModel
 from app.ai.schemas.inference_request import InferenceRequest
-from app.agents.domain.prompt import Prompt
-from app.core.config import ai_settings
+from app.ai.agents.domain.prompt import Prompt
+from app.core.ai_settings import ai_settings
 
 TRequest = TypeVar("TRequest")
 TResponse = TypeVar("TResponse", bound=BaseModel)
@@ -19,10 +18,10 @@ class BaseAgent(
     Generic[TRequest, TResponse],
 ):
     """
-    Base class for all AI reasoning agents.
+    Base class for every AI reasoning agent.
     """
 
-    MODEL_KEY: AIModel
+    MODEL_KEY: str
     RESPONSE_MODEL: type[TResponse]
     PROMPT_BUILDER: type[PromptBuilder]
 
@@ -38,9 +37,7 @@ class BaseAgent(
         request: TRequest,
     ) -> TResponse:
 
-        prompt = self._build_prompt(
-            request,
-        )
+        prompt = self._build_prompt(request)
 
         inference_request = self._build_inference_request(
             prompt,
@@ -65,7 +62,7 @@ class BaseAgent(
     ) -> InferenceRequest:
 
         return InferenceRequest(
-            model=ai_settings.models[self.MODEL_KEY.value],
+            model=ai_settings.models[self.MODEL_KEY],
             system_prompt=prompt.system,
             user_prompt=prompt.user,
             response_model=self.RESPONSE_MODEL,

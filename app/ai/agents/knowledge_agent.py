@@ -9,7 +9,7 @@ from app.ai.prompts.builders.knowledge_prompt_builder import (
     KnowledgePromptBuilder,
 )
 
-from app.agents.base_agent import BaseAgent
+from app.ai.agents.base.base_agent import BaseAgent
 
 
 class KnowledgeAgent(BaseAgent):

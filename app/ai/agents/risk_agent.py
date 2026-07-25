@@ -1,4 +1,4 @@
-from app.agents.base_agent import BaseAgent
+from app.ai.agents.base.base_agent import BaseAgent
 from app.schemas.debate.debate_artifacts import DebateArtifacts
 
 

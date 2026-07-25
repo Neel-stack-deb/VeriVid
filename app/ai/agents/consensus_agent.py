@@ -1,11 +1,20 @@
 from app.ai.agents.base.base_agent import BaseAgent
-from app.schemas.debate.debate_artifacts import DebateArtifacts
+from app.ai.prompts.builders.consensus_prompt_builder import (
+    ConsensusPromptBuilder,
+)
+from app.ai.schemas.consensus_request import ConsensusRequest
+from app.ai.schemas.consensus_response import ConsensusResponse
 
 
-class ConsensusAgent(BaseAgent):
+class ConsensusAgent(
+    BaseAgent[
+        ConsensusRequest,
+        ConsensusResponse,
+    ]
+):
 
-    def process(
-        self,
-        artifacts: DebateArtifacts,
-    ) -> DebateArtifacts:
-        raise NotImplementedError
+    MODEL_KEY = "debate"
+
+    RESPONSE_MODEL = ConsensusResponse
+
+    PROMPT_BUILDER = ConsensusPromptBuilder

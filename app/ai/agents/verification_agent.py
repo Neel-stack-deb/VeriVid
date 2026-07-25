@@ -1,11 +1,20 @@
 from app.ai.agents.base.base_agent import BaseAgent
-from app.schemas.debate.debate_artifacts import DebateArtifacts
+from app.ai.prompts.builders.verification_prompt_builder import (
+    VerificationPromptBuilder,
+)
+from app.ai.schemas.verification_request import VerificationRequest
+from app.ai.schemas.verification_response import VerificationResponse
 
 
-class VerificationAgent(BaseAgent):
+class VerificationAgent(
+    BaseAgent[
+        VerificationRequest,
+        VerificationResponse,
+    ]
+):
 
-    def process(
-        self,
-        artifacts: DebateArtifacts,
-    ) -> DebateArtifacts:
-        raise NotImplementedError
+    MODEL_KEY = "debate"
+
+    RESPONSE_MODEL = VerificationResponse
+
+    PROMPT_BUILDER = VerificationPromptBuilder

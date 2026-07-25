@@ -5,7 +5,10 @@ from app.ai.agents.context_agent import ContextAgent
 from app.ai.agents.consensus_agent import ConsensusAgent
 from app.ai.agents.risk_agent import RiskAgent
 from app.ai.agents.verification_agent import VerificationAgent
-
+from app.ai.schemas.context_request import ContextRequest
+from app.ai.schemas.verification_request import VerificationRequest
+from app.ai.schemas.risk_request import RiskRequest
+from app.ai.schemas.consensus_request import ConsensusRequest
 
 class DebatePipeline:
 
@@ -33,10 +36,47 @@ class DebatePipeline:
             knowledge=knowledge,
         )
 
-        artifacts = self._context.process(artifacts)
-        artifacts = self._verification.process(artifacts)
-        artifacts = self._risk.process(artifacts)
-        artifacts = self._consensus.process(artifacts)
+        # Context
+        context_response = self._context.process(
+            ContextRequest(
+                knowledge=knowledge,
+            )
+        )
+
+        artifacts.context_report = context_response.report
+
+        # Verification
+        verification_response = self._verification.process(
+            VerificationRequest(
+                knowledge=knowledge,
+                context=context_response.report,
+            )
+        )
+
+        artifacts.verification_report = verification_response.report
+
+        # Risk
+        risk_response = self._risk.process(
+            RiskRequest(
+                knowledge=knowledge,
+                context=context_response.report,
+                verification=verification_response.report,
+            )
+        )
+
+        artifacts.risk_report = risk_response.report
+
+        # Consensus
+        consensus_response = self._consensus.process(
+            ConsensusRequest(
+                knowledge=knowledge,
+                context=context_response.report,
+                verification=verification_response.report,
+                risk=risk_response.report,
+            )
+        )
+
+        artifacts.consensus_report = consensus_response.report
 
         self._persistence.save(
             workspace,

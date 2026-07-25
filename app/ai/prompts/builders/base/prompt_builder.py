@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
-
+from app.agents.domain.prompt import Prompt
 TRequest = TypeVar("TRequest")
 
 
@@ -13,7 +13,7 @@ class PromptBuilder(ABC, Generic[TRequest]):
     def build(
         self,
         request: TRequest,
-    ) -> tuple[str, str]:
+    ) -> Prompt:
         """
         Returns:
             (

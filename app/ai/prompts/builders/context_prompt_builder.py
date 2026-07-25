@@ -4,7 +4,7 @@ from app.ai.prompts.builders.base.prompt_builder import PromptBuilder
 from app.ai.schemas.context_request import ContextRequest
 from app.ai.prompts.loader import PromptLoader
 from app.ai.prompts.prompt_name import PromptName
-
+from app.agents.domain.prompt import Prompt
 
 class ContextPromptBuilder(
     PromptBuilder[ContextRequest]
@@ -30,7 +30,8 @@ class ContextPromptBuilder(
             f"{knowledge_json}"
         )
 
-        return (
-            system_prompt,
-            user_prompt,
+        return Prompt(
+            system=system_prompt,
+            user=user_prompt,
         )
+        

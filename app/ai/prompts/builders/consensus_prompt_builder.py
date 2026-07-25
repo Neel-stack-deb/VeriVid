@@ -2,6 +2,7 @@ from app.ai.prompts.builders.base.prompt_builder import PromptBuilder
 from app.ai.schemas.consensus_request import ConsensusRequest
 from app.ai.prompts.loader import PromptLoader
 from app.ai.prompts.prompt_name import PromptName
+from app.agents.domain.prompt import Prompt
 
 
 class ConsensusPromptBuilder(
@@ -35,4 +36,8 @@ class ConsensusPromptBuilder(
 {request.risk.model_dump_json(indent=2)}
 """
 
-        return system_prompt, user_prompt
+        return Prompt(
+            system=system_prompt,
+            user=user_prompt,
+        )
+        

@@ -35,6 +35,7 @@ class WorkspaceService:
         report_dir = workspace_root / "reports"
         scenes_dir = workspace_root / "scenes"
         knowledge_dir = workspace_root / "knowledge"
+        debate_dir = workspace_root / "debates"
 
         file_extension = Path(file.filename).suffix.lower()
 
@@ -51,7 +52,8 @@ class WorkspaceService:
                 transcript_dir,
                 report_dir,
                 scenes_dir,
-                knowledge_dir
+                knowledge_dir,
+                debate_dir,
             ]:
                 directory.mkdir(parents=True, exist_ok=True)
 
@@ -102,6 +104,8 @@ class WorkspaceService:
             transcript_dir=transcript_dir,
             report_dir=report_dir,
             scenes_dir=scenes_dir,
+            knowledge_dir=knowledge_dir,
+            debate_dir=debate_dir,
         )
 
         return workspace, total_bytes_written

@@ -90,16 +90,44 @@ uv run pytest tests/ -q --tb=short
 | FFmpeg / ffprobe | **Real** (system binaries) | Used in metadata, frame, audio, E2E tests |
 | FastAPI upload | **Real** (TestClient) | In-process |
 
-## Remaining blockers (before Phase 3 — LangGraph / API / frontend)
+## Phase 3 — LangGraph orchestration (branch `cursor/langgraph-orchestration-62f3`)
+
+### Changes
+
+- Added `langgraph` dependency (`langgraph==1.2.24`).
+- New package `app/ai/graph/` — `DebateState`, four nodes, `build_debate_graph`, artifact conversion.
+- `DebatePipeline` now invokes the compiled graph (no duplicated orchestration).
+- Documentation: `LANGGRAPH_ARCHITECTURE.md`.
+
+### New tests (`tests/test_debate_graph.py`)
+
+| Test | Coverage |
+| --- | --- |
+| Graph compilation | Builds without credentials |
+| Node unit tests | Context, verification prerequisites, full node chain |
+| Execution order | Four inference calls in agent order |
+| Failure propagation | `error` state + `DebateGraphError` |
+| Pipeline integration | Persistence via graph-backed pipeline |
+
+### Commands & results (Phase 3)
+
+```bash
+uv run pytest tests/ -q --tb=short
+# 23 passed in ~2.5s
+```
+
+All 16 Phase 2 tests remain green.
+
+## Remaining blockers (before API / frontend)
 
 1. **Upload response still lacks `video_id`** — needed for product APIs.
 2. **No `POST /api/videos/{id}/process` or status/results endpoints.**
-3. **LangGraph orchestration not implemented** (intentionally out of scope for this phase).
-4. **No frontend.**
-5. **Live inference** requires `FIREWORKS_*`, `AMD_*`, and/or `AI_*` credentials — not validated here.
-6. **Frame timestamps** still derived from frame index, not wall-clock seconds (documented in Phase 1).
-7. **`KnowledgeAgent` does not use `BaseAgent.process`** — uses dedicated `extract()` (by design).
-8. **Whisper model load** remains heavy when transcription client is first accessed (lazy, but still costly).
+3. **No frontend.**
+4. **Live inference** requires `FIREWORKS_*`, `AMD_*`, and/or `AI_*` credentials — not validated here.
+5. **Frame timestamps** still derived from frame index, not wall-clock seconds.
+6. **`KnowledgeAgent` does not use `BaseAgent.process`** — uses dedicated `extract()` (by design).
+7. **Whisper model load** remains heavy when transcription client is first accessed (lazy, but still costly).
+8. **LangGraph**: sequential only; no checkpointing or conditional edges yet.
 
 ## Completion criteria checklist
 

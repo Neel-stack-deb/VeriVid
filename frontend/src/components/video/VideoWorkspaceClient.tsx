@@ -14,6 +14,7 @@ import { ProcessingPipeline } from "@/components/processing/ProcessingPipeline";
 import { StatusBadge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Card, CardHeader } from "@/components/ui/Card";
+import { Skeleton, SkeletonText } from "@/components/ui/Skeleton";
 import type { VideoDetailResponse } from "@/lib/types";
 
 export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
@@ -67,41 +68,51 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:py-10">
-      <VideoPageHeader
-        title={detail?.filename ?? `Video ${videoId.slice(0, 8)}…`}
-        videoId={videoId}
-        lifecycle={lifecycle}
-      />
+      <header className="mb-8">
+        <div className="flex flex-wrap items-center gap-3">
+          {!detail && !detailError ? (
+            <Skeleton className="h-8 w-48" />
+          ) : (
+            <h1 className="page-title">
+              {detail?.filename ?? `Video ${videoId.slice(0, 8)}…`}
+            </h1>
+          )}
+          <StatusBadge status={lifecycle} />
+        </div>
+        <p className="mt-2 font-mono text-xs text-[var(--text-muted)]">{videoId}</p>
+      </header>
 
       {(detailError || statusError || startError) && (
         <div
-          className="mb-6 flex items-start gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200"
+          className="mb-6 flex items-start gap-2 rounded-[var(--radius-lg)] border border-rose-500/30 bg-[var(--error-muted)] px-4 py-3 text-sm text-rose-200"
           role="alert"
         >
-          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
           <span>{startError ?? statusError ?? detailError}</span>
         </div>
       )}
 
       <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
         <Card>
-          <CardHeader title="Processing" />
-          <div className="space-y-4 px-5 py-4">
+          <CardHeader title="Processing" description="Live pipeline from API status" />
+          <div className="space-y-4 px-5 py-5">
             {statusLoading && !status ? (
-              <p className="text-sm text-zinc-500">Loading status…</p>
+              <SkeletonText lines={5} />
             ) : (
               <>
                 <div className="flex flex-wrap items-center gap-3">
                   <StatusBadge status={lifecycle} />
                   {status?.current_stage ? (
-                    <span className="text-xs text-zinc-500">
-                      Stage:{" "}
-                      <span className="text-zinc-300">{status.current_stage}</span>
+                    <span className="text-xs text-[var(--text-muted)]">
+                      Stage{" "}
+                      <span className="text-[var(--text-secondary)]">
+                        {status.current_stage}
+                      </span>
                     </span>
                   ) : null}
                   {status?.progress != null ? (
-                    <span className="text-xs text-zinc-500">
-                      Progress: {(status.progress * 100).toFixed(0)}%
+                    <span className="text-xs text-[var(--text-muted)]">
+                      Progress {(status.progress * 100).toFixed(0)}%
                     </span>
                   ) : null}
                 </div>
@@ -117,7 +128,7 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
           </div>
         </Card>
 
-        <div className="space-y-4">
+        <aside className="space-y-4">
           <Card>
             <CardHeader title="Actions" />
             <div className="flex flex-col gap-2 px-5 py-4">
@@ -126,7 +137,7 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
                 disabled={busy || lifecycle === "completed"}
                 onClick={() => void handleStart()}
               >
-                <Play className="h-4 w-4" />
+                <Play className="h-4 w-4" aria-hidden />
                 {lifecycle === "failed" ? "Retry analysis" : "Start analysis"}
               </Button>
               <Button
@@ -137,13 +148,13 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
                   void loadDetail();
                 }}
               >
-                <RefreshCw className="h-4 w-4" />
+                <RefreshCw className="h-4 w-4" aria-hidden />
                 Refresh
               </Button>
               {lifecycle === "completed" ? (
                 <Link href={`/app/videos/${videoId}/analysis`}>
                   <Button type="button" variant="secondary" className="w-full">
-                    <BarChart3 className="h-4 w-4" />
+                    <BarChart3 className="h-4 w-4" aria-hidden />
                     View results
                   </Button>
                 </Link>
@@ -152,7 +163,7 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
           </Card>
           <Card>
             <CardHeader title="Details" />
-            <dl className="space-y-2 px-5 py-4 text-sm text-zinc-400">
+            <dl className="space-y-2 px-5 py-4 text-sm">
               <DetailRow label="Video ID" value={videoId} mono />
               {detail?.file_size != null ? (
                 <DetailRow
@@ -161,36 +172,14 @@ export function VideoWorkspaceClient({ videoId }: { videoId: string }) {
                 />
               ) : null}
               {detail?.duration != null ? (
-                <DetailRow
-                  label="Duration"
-                  value={`${detail.duration.toFixed(1)}s`}
-                />
+                <DetailRow label="Duration" value={`${detail.duration.toFixed(1)}s`} />
               ) : null}
+              {detail?.codec ? <DetailRow label="Codec" value={detail.codec} /> : null}
             </dl>
           </Card>
-        </div>
+        </aside>
       </div>
     </div>
-  );
-}
-
-function VideoPageHeader({
-  title,
-  videoId,
-  lifecycle,
-}: {
-  title: string;
-  videoId: string;
-  lifecycle: import("@/lib/types").ProcessingLifecycleStatus;
-}) {
-  return (
-    <header className="mb-8">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-semibold text-zinc-50">{title}</h1>
-        <StatusBadge status={lifecycle} />
-      </div>
-      <p className="mt-2 font-mono text-xs text-zinc-600">{videoId}</p>
-    </header>
   );
 }
 
@@ -205,8 +194,10 @@ function DetailRow({
 }) {
   return (
     <div className="flex justify-between gap-4">
-      <dt className="text-xs text-zinc-500">{label}</dt>
-      <dd className={`text-right text-zinc-300 ${mono ? "font-mono text-xs" : ""}`}>
+      <dt className="text-xs text-[var(--text-muted)]">{label}</dt>
+      <dd
+        className={`text-right text-[var(--text-secondary)] ${mono ? "font-mono text-xs" : ""}`}
+      >
         {value}
       </dd>
     </div>

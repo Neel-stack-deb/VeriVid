@@ -48,4 +48,5 @@ Tests use mocks for external AI; FFmpeg is used for real media fixtures. See `TE
 ## Project docs
 
 - `PROJECT_AUDIT.md` — Phase 1 architecture audit
-- `TESTING_REPORT.md` — Phase 2 validation results
+- `TESTING_REPORT.md` — Validation results (Phases 2–3)
+- `LANGGRAPH_ARCHITECTURE.md` — Debate council LangGraph design

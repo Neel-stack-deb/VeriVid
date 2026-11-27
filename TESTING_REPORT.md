@@ -143,10 +143,18 @@ uv run pytest tests/ -q --tb=short
 
 Phases 2–3 tests remain green.
 
-## Remaining blockers (before frontend)
+## Phase 5 — Frontend validation
 
-1. **No frontend.**
-4. **Live inference** requires `FIREWORKS_*`, `AMD_*`, and/or `AI_*` credentials — not validated here.
+```bash
+cd frontend && npm run test && npm run typecheck && npm run build
+# 10 Vitest tests passed; production build succeeded
+```
+
+Landing, workspace upload, status polling, results dashboard, and labeled demo mode are documented in `FRONTEND_DOCUMENTATION.md`.
+
+## Remaining blockers
+
+1. **Live inference** requires `FIREWORKS_*`, `AMD_*`, and/or `AI_*` credentials — not validated here.
 5. **Frame timestamps** still derived from frame index, not wall-clock seconds.
 6. **`KnowledgeAgent` does not use `BaseAgent.process`** — uses dedicated `extract()` (by design).
 7. **Whisper model load** remains heavy when transcription client is first accessed (lazy, but still costly).

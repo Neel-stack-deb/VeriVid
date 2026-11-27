@@ -9,46 +9,47 @@ from app.ai.schemas.vision_request import VisionRequest
 from app.core.ai_settings import ai_settings
 from app.utils.image_encoder import ImageEncoder
 
+
 class QwenVisionClient(
-    VLLMClient,
-    VisionClient,
+  VLLMClient,
+  VisionClient,
 ):
 
-    def analyze(
-        self,
-        request: VisionRequest,
-    ) -> FrameVisionResult:
+  def analyze(
+    self,
+    request: VisionRequest,
+  ) -> FrameVisionResult:
 
-        response = self.client.chat.completions.create(
-            model=ai_settings.vision_model,
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": request.prompt,
-                        },
-                        {
-                            "type": "image_url",
-                            "image_url": {
-                                "url": ImageEncoder.encode(request.image_path),
-                            },
-                        },
-                    ],
-                }
-            ],
-            temperature=0,
-        )
+    response = self.client.chat.completions.create(
+      model=ai_settings.models["vision"],
+      messages=[
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": request.prompt,
+            },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": ImageEncoder.encode(request.frame_path),
+              },
+            },
+          ],
+        }
+      ],
+      temperature=0,
+    )
 
-        content = response.choices[0].message.content
+    content = response.choices[0].message.content
 
-        try:
-            return FrameVisionResult.model_validate(
-                json.loads(content)
-            )
+    try:
+      return FrameVisionResult.model_validate(
+        json.loads(content)
+      )
 
-        except Exception as e:
-            raise BadRequestError(
-                f"Invalid vision response: {content}"
-            ) from e
+    except Exception as e:
+      raise BadRequestError(
+        f"Invalid vision response: {content}"
+      ) from e

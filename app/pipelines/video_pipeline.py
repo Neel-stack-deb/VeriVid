@@ -21,8 +21,8 @@ class VideoPipeline:
             workspace=workspace
         )
 
-        artifacts = MetadataService.process(artifacts)
-        artifacts = FrameService.process(artifacts)
+        artifacts = MetadataService.extract(artifacts)
+        artifacts = FrameService.extract_frames(artifacts)
         artifacts = AudioService.process(artifacts)
         artifacts = WhisperService.process(artifacts)
         artifacts = VisionService(

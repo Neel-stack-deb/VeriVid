@@ -23,7 +23,13 @@ uv run uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 - Health: `GET /health`
-- Upload: `POST /upload` (multipart field `video`)
+- Upload (legacy): `POST /upload`
+- Upload (API): `POST /api/videos/upload`
+- Process: `POST /api/videos/{video_id}/process`
+- Status: `GET /api/videos/{video_id}/status`
+- Results: `GET /api/videos/{video_id}/results`
+
+See `API_DOCUMENTATION.md`.
 
 ## Environment variables
 
@@ -34,6 +40,7 @@ uv run uvicorn main:app --host 0.0.0.0 --port 8000
 | `AI_BASE_URL`, `AI_API_KEY` | Vision (vLLM / Qwen) endpoint |
 | `AI_PROVIDER` | `fireworks` or `amd` (informational today) |
 | `WHISPER_MODEL` | Hugging Face model id for local transcription (default `openai/whisper-base`) |
+| `CORS_ORIGINS` | Comma-separated allowed browser origins |
 
 Credentials are **not** required for application import or unit tests. Missing credentials raise `AuthenticationError` when a provider is invoked.
 
@@ -50,3 +57,4 @@ Tests use mocks for external AI; FFmpeg is used for real media fixtures. See `TE
 - `PROJECT_AUDIT.md` — Phase 1 architecture audit
 - `TESTING_REPORT.md` — Validation results (Phases 2–3)
 - `LANGGRAPH_ARCHITECTURE.md` — Debate council LangGraph design
+- `API_DOCUMENTATION.md` — REST API reference

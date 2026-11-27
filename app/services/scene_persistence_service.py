@@ -13,7 +13,7 @@ class ScenePersistenceService:
     ) -> None:
 
         output = (
-            workspace.scenes_directory
+            workspace.scenes_dir
             / "scenes.json"
         )
 

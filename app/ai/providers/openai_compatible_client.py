@@ -36,11 +36,25 @@ class OpenAICompatibleClient(
         base_url: str,
         api_key: str,
     ):
+        self._base_url = base_url.strip()
+        self._api_key = api_key.strip()
+        self._client: OpenAI | None = None
 
-        self._client = self._create_client(
-            base_url,
-            api_key,
-        )
+    def _ensure_client(self) -> OpenAI:
+        self._require_credentials()
+        if self._client is None:
+            self._client = self._create_client(
+                self._base_url,
+                self._api_key,
+            )
+        return self._client
+
+    def _require_credentials(self) -> None:
+        if not self._base_url or not self._api_key:
+            raise AuthenticationError(
+                f"{self._provider_name()} credentials are not configured. "
+                f"Set the provider base URL and API key via environment variables."
+            )
 
     # ----------------------------------------------------
     # Public API
@@ -55,9 +69,11 @@ class OpenAICompatibleClient(
 
         self._log_request(request)
 
+        client = self._ensure_client()
+
         try:
 
-            completion = self._client.beta.chat.completions.parse(
+            completion = client.beta.chat.completions.parse(
                 model=request.model,
                 messages=self._build_messages(request),
                 response_format=request.response_model,

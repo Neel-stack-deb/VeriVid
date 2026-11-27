@@ -22,4 +22,5 @@ def test_upload_endpoint_accepts_mp4(client: TestClient, sample_mp4: Path):
   payload = response.json()
   assert payload["filename"] == "sample.mp4"
   assert payload["file_size"] > 0
+  assert payload["video_id"]
   assert Path(payload["storage_path"]).exists()

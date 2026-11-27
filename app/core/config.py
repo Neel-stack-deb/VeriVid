@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -23,6 +23,23 @@ class Settings(BaseSettings):
   fireworks_api_key: str = Field(default="", validation_alias="FIREWORKS_API_KEY")
   amd_base_url: str = Field(default="", validation_alias="AMD_BASE_URL")
   amd_api_key: str = Field(default="", validation_alias="AMD_API_KEY")
+
+  cors_origins: list[str] = Field(
+    default_factory=list,
+    validation_alias="CORS_ORIGINS",
+  )
+
+  @field_validator("cors_origins", mode="before")
+  @classmethod
+  def _parse_cors_origins(cls, value: str | list[str] | None) -> list[str]:
+    if value is None:
+      return []
+    if isinstance(value, list):
+      return value
+    text = value.strip()
+    if not text:
+      return []
+    return [part.strip() for part in text.split(",") if part.strip()]
 
   @property
   def fireworks(self) -> ProviderCredentials:

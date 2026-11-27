@@ -118,11 +118,34 @@ uv run pytest tests/ -q --tb=short
 
 All 16 Phase 2 tests remain green.
 
-## Remaining blockers (before API / frontend)
+## Phase 4 — REST API and background processing (branch `cursor/api-layer-62f3`)
 
-1. **Upload response still lacks `video_id`** — needed for product APIs.
-2. **No `POST /api/videos/{id}/process` or status/results endpoints.**
-3. **No frontend.**
+### Changes
+
+- `/api/videos/*` endpoints (upload, process, status, detail, results, delete)
+- `video_id` on upload (legacy `/upload` included)
+- `ProcessingRecord` persisted as `status.json` per workspace
+- `VideoProcessingOrchestrator` — staged perception + knowledge + LangGraph debate
+- `InProcessJobExecutor` (`JobExecutor` interface)
+- CORS via `CORS_ORIGINS`
+- `API_DOCUMENTATION.md`
+
+### New tests (`tests/test_api_videos.py`)
+
+Upload, validation, process/status, duplicates, 404, partial results, delete, mocked full processing.
+
+### Commands & results (Phase 4)
+
+```bash
+uv run pytest tests/ -q --tb=short
+# 32 passed in ~3.2s
+```
+
+Phases 2–3 tests remain green.
+
+## Remaining blockers (before frontend)
+
+1. **No frontend.**
 4. **Live inference** requires `FIREWORKS_*`, `AMD_*`, and/or `AI_*` credentials — not validated here.
 5. **Frame timestamps** still derived from frame index, not wall-clock seconds.
 6. **`KnowledgeAgent` does not use `BaseAgent.process`** — uses dedicated `extract()` (by design).

@@ -20,7 +20,13 @@ class VideoValidator:
     @staticmethod
     def validate_extension(file: UploadFile):
 
-        extension = Path(file.filename).suffix.lower()
+        safe_name = Path(file.filename or "").name
+        if not safe_name:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Filename is required",
+            )
+        extension = Path(safe_name).suffix.lower()
 
         if extension not in ALLOWED_VIDEO_EXTENSIONS:
             raise HTTPException(

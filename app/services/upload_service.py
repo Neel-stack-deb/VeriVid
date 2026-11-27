@@ -12,8 +12,9 @@ class UploadService:
         workspace, size = await WorkspaceService.create(video)
 
         return UploadResponse(
+            video_id=workspace.video_id,
             filename=video.filename,
             content_type=video.content_type,
             file_size=size,
-            storage_path=str(workspace.video_path)
+            storage_path=str(workspace.video_path),
         )

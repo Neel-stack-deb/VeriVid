@@ -49,7 +49,7 @@ class DebatePipeline:
         verification_response = self._verification.process(
             VerificationRequest(
                 knowledge=knowledge,
-                context=context_response.report,
+                context=context_response,
             )
         )
 
@@ -59,8 +59,8 @@ class DebatePipeline:
         risk_response = self._risk.process(
             RiskRequest(
                 knowledge=knowledge,
-                context=context_response.report,
-                verification=verification_response.report,
+                context=context_response,
+                verification=verification_response,
             )
         )
 
@@ -70,9 +70,9 @@ class DebatePipeline:
         consensus_response = self._consensus.process(
             ConsensusRequest(
                 knowledge=knowledge,
-                context=context_response.report,
-                verification=verification_response.report,
-                risk=risk_response.report,
+                context=context_response,
+                verification=verification_response,
+                risk=risk_response,
             )
         )
 

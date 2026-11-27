@@ -32,7 +32,7 @@ class DebatePersistenceService:
             ) as file:
 
                 json.dump(
-                    report.model_dump(),
+                    report.model_dump(mode="json"),
                     file,
                     indent=2,
                     ensure_ascii=False,

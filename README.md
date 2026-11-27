@@ -52,9 +52,27 @@ uv run pytest tests/ -q
 
 Tests use mocks for external AI; FFmpeg is used for real media fixtures. See `TESTING_REPORT.md`.
 
+## Frontend (Phase 5)
+
+```bash
+cd frontend
+cp .env.example .env.local   # set NEXT_PUBLIC_API_URL if needed
+npm install
+npm run dev                  # http://localhost:3000
+```
+
+Run the API on port 8000 and allow the dev origin, e.g. `CORS_ORIGINS=http://localhost:3000`.
+
+```bash
+cd frontend && npm run test && npm run build
+```
+
+See `FRONTEND_DOCUMENTATION.md` for routes, components, and demo mode.
+
 ## Project docs
 
 - `PROJECT_AUDIT.md` — Phase 1 architecture audit
 - `TESTING_REPORT.md` — Validation results (Phases 2–3)
 - `LANGGRAPH_ARCHITECTURE.md` — Debate council LangGraph design
 - `API_DOCUMENTATION.md` — REST API reference
+- `FRONTEND_DOCUMENTATION.md` — Next.js app architecture

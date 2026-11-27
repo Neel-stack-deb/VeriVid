@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 
+import { ProductPreview } from "@/components/landing/ProductPreview";
 import { SiteNav } from "@/components/layout/SiteNav";
 import {
   FeaturesMotion,
@@ -18,11 +19,10 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 
 const workflow = [
-  { step: "Upload", copy: "Ingest video securely via REST API" },
-  { step: "Perceive", copy: "Metadata, frames, audio, transcription, vision" },
+  { step: "Perceive", copy: "Metadata, frames, audio, transcription, and vision" },
   { step: "Structure", copy: "Knowledge graph from multimodal signals" },
   { step: "Reason", copy: "Four-agent Debate Council verification" },
-  { step: "Present", copy: "Structured reports and insights" },
+  { step: "Present", copy: "Structured reports and intelligence dashboard" },
 ];
 
 const features = [
@@ -60,13 +60,14 @@ const features = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#08090d] text-zinc-200">
+    <div className="min-h-screen bg-[var(--bg-base)] text-[var(--text-secondary)]">
       <SiteNav />
       <main>
         <Hero />
         <WorkflowSection />
         <FeaturesSection />
         <CouncilSection />
+        <FinalCta />
       </main>
       <SiteFooter />
     </div>
@@ -75,80 +76,58 @@ export default function LandingPage() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-zinc-800/80">
+    <section className="landing-grid-bg relative overflow-hidden border-b border-[var(--border-subtle)]">
       <HeroMotion>
-        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:py-28">
-        <div>
-          <p className="text-sm font-medium text-violet-300">VeriVid</p>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight text-zinc-50 sm:text-5xl">
-            Every video has a story.{" "}
-            <span className="text-violet-300">Verify what&apos;s inside.</span>
-          </h1>
-          <p className="mt-6 text-lg text-zinc-400">
-            Turn videos into structured knowledge, verified insights, and accessible
-            intelligence with multimodal AI.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/app">
-              <Button>Analyze a video</Button>
-            </Link>
-            <a href="#workflow">
-              <Button variant="secondary">Explore how it works</Button>
-            </a>
+        <div className="mx-auto grid max-w-6xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-2 md:py-24 lg:gap-16 lg:py-28">
+          <div>
+            <p className="text-meta text-violet-300/90">VeriVid</p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-5xl lg:leading-[1.1]">
+              Every video has a story.{" "}
+              <span className="text-violet-300">Verify what&apos;s inside.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--text-secondary)]">
+              Transform video into structured knowledge, verified insights, and accessible
+              intelligence with multimodal AI.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/app">
+                <Button>Analyze a video</Button>
+              </Link>
+              <a href="#workflow">
+                <Button variant="secondary">Explore how it works</Button>
+              </a>
+            </div>
           </div>
-        </div>
-        <div className="relative hidden lg:block">
-          <ProductPreview />
-        </div>
+          <div className="md:block">
+            <ProductPreview />
+          </div>
         </div>
       </HeroMotion>
     </section>
   );
 }
 
-function ProductPreview() {
-  return (
-    <div className="rounded-2xl border border-zinc-800 bg-[#0c0d12] p-6 shadow-2xl shadow-violet-950/20">
-      <div className="flex items-center gap-2 border-b border-zinc-800 pb-4 text-xs text-zinc-500">
-        <span className="h-2 w-2 rounded-full bg-emerald-400" />
-        processing · debate
-      </div>
-      <div className="mt-4 space-y-3">
-        {["Metadata", "Vision", "Knowledge", "Council"].map((label, i) => (
-          <div
-            key={label}
-            className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-[#101118] px-3 py-2"
-          >
-            <CheckCircle2
-              className={`h-4 w-4 ${i < 3 ? "text-emerald-400" : "text-violet-400"}`}
-            />
-            <span className="text-sm text-zinc-300">{label}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function WorkflowSection() {
   return (
     <section id="workflow" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-      <h2 className="text-center text-2xl font-semibold text-zinc-50">
+      <h2 className="text-center text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
         Perceive → Structure → Reason → Present
       </h2>
-      <p className="mx-auto mt-3 max-w-2xl text-center text-sm text-zinc-500">
-        The same lifecycle your operators see in the workspace — driven by real API
-        status, not simulated progress bars.
+      <p className="mx-auto mt-3 max-w-2xl text-center text-sm leading-relaxed text-[var(--text-muted)]">
+        The same lifecycle your operators see in the workspace — driven by real API status, not
+        simulated progress bars.
       </p>
-      <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <ol className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {workflow.map((item, index) => (
           <li key={item.step}>
-            <Card className="h-full p-4">
-              <span className="text-xs font-medium text-violet-400">
+            <Card hover className="h-full p-5">
+              <span className="text-meta text-violet-400/90">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <p className="mt-2 font-medium text-zinc-100">{item.step}</p>
-              <p className="mt-1 text-xs text-zinc-500">{item.copy}</p>
+              <p className="mt-3 font-medium text-[var(--text-primary)]">{item.step}</p>
+              <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">
+                {item.copy}
+              </p>
             </Card>
           </li>
         ))}
@@ -161,37 +140,38 @@ function FeaturesSection() {
   return (
     <section
       id="features"
-      className="border-y border-zinc-800/80 bg-[#0a0b0f] px-4 py-20 sm:px-6"
+      className="border-y border-[var(--border-subtle)] bg-[var(--bg-muted)] px-4 py-20 sm:px-6"
     >
       <FeaturesMotion>
         <div className="mx-auto max-w-6xl">
-        <h2 className="text-2xl font-semibold text-zinc-50">Capabilities</h2>
-        <p className="mt-2 max-w-2xl text-sm text-zinc-500">
-          Implemented features connect to live endpoints. Planned items are labeled
-          explicitly.
-        </p>
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {features.map(({ icon: Icon, title, body, implemented }) => (
-            <li key={title}>
-              <Card className="h-full p-5">
-                <Icon className="h-5 w-5 text-violet-400" aria-hidden />
-                <div className="mt-3 flex items-center gap-2">
-                  <p className="font-medium text-zinc-100">{title}</p>
-                  <span
-                    className={`rounded-full px-2 py-0.5 text-[10px] uppercase tracking-wide ${
-                      implemented
-                        ? "bg-emerald-500/10 text-emerald-300"
-                        : "bg-zinc-700/50 text-zinc-400"
-                    }`}
-                  >
-                    {implemented ? "Live" : "Planned"}
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-zinc-500">{body}</p>
-              </Card>
-            </li>
-          ))}
-        </ul>
+          <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+            Capabilities
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm text-[var(--text-muted)]">
+            Implemented features connect to live endpoints. Planned items are labeled explicitly.
+          </p>
+          <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {features.map(({ icon: Icon, title, body, implemented }) => (
+              <li key={title}>
+                <Card hover className="h-full p-5">
+                  <Icon className="h-5 w-5 text-violet-400" aria-hidden />
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <p className="font-medium text-[var(--text-primary)]">{title}</p>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide ${
+                        implemented
+                          ? "border border-emerald-500/25 bg-[var(--success-muted)] text-emerald-300"
+                          : "border border-[var(--border-default)] text-[var(--text-muted)]"
+                      }`}
+                    >
+                      {implemented ? "Live" : "Planned"}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{body}</p>
+                </Card>
+              </li>
+            ))}
+          </ul>
         </div>
       </FeaturesMotion>
     </section>
@@ -199,37 +179,32 @@ function FeaturesSection() {
 }
 
 function CouncilSection() {
-  const agents = [
-    "Context",
-    "Verification",
-    "Risk",
-    "Consensus",
-  ];
+  const agents = ["Context", "Verification", "Risk", "Consensus"];
   return (
     <section id="council" className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-      <h2 className="text-2xl font-semibold text-zinc-50">Debate Council</h2>
-      <p className="mt-2 max-w-2xl text-sm text-zinc-500">
-        Four specialist agents reason in sequence — LangGraph on the backend, a
-        retrospective council view on the frontend when reports are ready.
+      <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+        Debate Council
+      </h2>
+      <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--text-muted)]">
+        Four specialist agents reason in sequence — LangGraph on the backend, a retrospective
+        council view on the frontend when reports are ready.
       </p>
-      <div className="mt-10 flex flex-col items-stretch gap-3 lg:flex-row lg:items-center">
+      <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {agents.map((name, i) => (
-          <div key={name} className="flex flex-1 items-center gap-3">
-            <Card className="flex-1 p-4 text-center">
-              <p className="text-sm font-medium text-violet-200">{name} Agent</p>
-            </Card>
-            {i < agents.length - 1 ? (
-              <span className="hidden text-zinc-600 lg:inline" aria-hidden>
-                →
-              </span>
-            ) : null}
-          </div>
+          <Card
+            key={name}
+            className={`p-4 text-center ${
+              i === 3 ? "border-violet-500/30 bg-[var(--accent-muted)]" : ""
+            }`}
+          >
+            <p className="text-sm font-medium text-violet-200">{name} Agent</p>
+          </Card>
         ))}
       </div>
       <p className="mt-8 text-center">
         <Link href="/app/demo">
           <Button variant="secondary">
-            <Upload className="h-4 w-4" />
+            <CheckCircle2 className="h-4 w-4" aria-hidden />
             View sample council output
           </Button>
         </Link>
@@ -238,26 +213,53 @@ function CouncilSection() {
   );
 }
 
+function FinalCta() {
+  return (
+    <section className="border-t border-[var(--border-subtle)] bg-[var(--bg-muted)] px-4 py-16 sm:px-6">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 text-center">
+        <h2 className="text-2xl font-semibold tracking-tight text-[var(--text-primary)]">
+          Ready to verify your next video?
+        </h2>
+        <p className="max-w-lg text-sm text-[var(--text-muted)]">
+          Upload through the workspace, poll real processing status, and explore structured
+          intelligence when the pipeline completes.
+        </p>
+        <div className="flex flex-wrap justify-center gap-3">
+          <Link href="/app">
+            <Button>
+              <Upload className="h-4 w-4" aria-hidden />
+              Open workspace
+            </Button>
+          </Link>
+          <Link href="/app/demo">
+            <Button variant="secondary">Try demo</Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function SiteFooter() {
   return (
-    <footer className="border-t border-zinc-800/80 bg-[#06070a] px-4 py-12 sm:px-6">
+    <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-inset)] px-4 py-12 sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 sm:flex-row sm:justify-between">
         <div>
-          <p className="font-semibold text-zinc-200">VeriVid</p>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="font-semibold text-[var(--text-primary)]">VeriVid</p>
+          <p className="mt-1 text-sm text-[var(--text-muted)]">
             Multimodal video intelligence · portfolio build
           </p>
         </div>
-        <nav className="flex flex-wrap gap-4 text-sm text-zinc-500">
-          <Link href="/app" className="hover:text-zinc-300">
+        <nav className="flex flex-wrap gap-4 text-sm text-[var(--text-muted)]" aria-label="Footer">
+          <Link href="/app" className="hover:text-[var(--text-secondary)]">
             Workspace
           </Link>
-          <Link href="/app/demo" className="hover:text-zinc-300">
+          <Link href="/app/demo" className="hover:text-[var(--text-secondary)]">
             Demo
           </Link>
           <a
             href="https://github.com/Neel-stack-deb/VeriVid"
-            className="hover:text-zinc-300"
+            className="hover:text-[var(--text-secondary)]"
             rel="noopener noreferrer"
           >
             Repository

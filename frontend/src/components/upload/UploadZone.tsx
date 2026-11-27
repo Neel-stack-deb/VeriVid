@@ -59,10 +59,10 @@ export function UploadZone({
 
   return (
     <div
-      className={`relative rounded-2xl border-2 border-dashed p-10 text-center transition-colors ${
+      className={`relative rounded-[var(--radius-xl)] border-2 border-dashed p-8 text-center transition-colors sm:p-10 ${
         dragging
-          ? "border-violet-400 bg-violet-500/5"
-          : "border-zinc-700 bg-[#0e0f14]"
+          ? "border-violet-400 bg-[var(--accent-muted)]"
+          : "border-[var(--border-default)] bg-[var(--bg-muted)]"
       }`}
       onDragOver={(e) => {
         e.preventDefault();
@@ -76,36 +76,46 @@ export function UploadZone({
         type="file"
         accept=".mp4,.mov,.avi,.mkv,.webm,video/*"
         className="hidden"
+        aria-label="Choose video file"
         onChange={(e) => {
           const file = e.target.files?.[0];
           if (file) void handleFile(file);
         }}
       />
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-violet-500/10 text-violet-300">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-[var(--radius-lg)] border border-violet-500/25 bg-[var(--accent-muted)] text-violet-300">
         {uploading ? (
-          <FileVideo className="h-7 w-7 animate-pulse" aria-hidden />
+          <FileVideo className="h-6 w-6 animate-pulse" aria-hidden />
         ) : (
-          <Upload className="h-7 w-7" aria-hidden />
+          <Upload className="h-6 w-6" aria-hidden />
         )}
       </div>
-      <p className="mt-4 text-lg font-medium text-zinc-100">
+      <p className="mt-4 text-base font-medium text-[var(--text-primary)]">
         Drop a video or browse files
       </p>
-      <p className="mt-2 text-sm text-zinc-500">
+      <p className="mt-2 text-sm text-[var(--text-muted)]">
         MP4, MOV, AVI, MKV, WEBM — up to 500 MB
       </p>
       {progress !== null ? (
         <div className="mx-auto mt-6 max-w-xs">
-          <div className="h-1.5 overflow-hidden rounded-full bg-zinc-800">
+          <div
+            className="h-1 overflow-hidden rounded-full bg-[var(--bg-hover)]"
+            role="progressbar"
+            aria-valuenow={Math.round(progress * 100)}
+            aria-valuemin={0}
+            aria-valuemax={100}
+          >
             <div
-              className="h-full bg-violet-500 transition-all"
+              className="h-full bg-[var(--accent)] transition-[width]"
               style={{ width: `${Math.round(progress * 100)}%` }}
             />
           </div>
+          <p className="mt-2 text-xs text-[var(--text-muted)]">
+            Uploading… {Math.round(progress * 100)}%
+          </p>
         </div>
       ) : null}
       {error ? (
-        <p className="mt-4 text-sm text-rose-400" role="alert">
+        <p className="mt-4 text-sm text-[var(--error)]" role="alert">
           {error}
         </p>
       ) : null}

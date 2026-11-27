@@ -7,6 +7,8 @@ import { ArrowLeft } from "lucide-react";
 import { getVideoResults, ApiClientError } from "@/lib/api/client";
 import { VideoResultsView } from "@/components/results/VideoResultsView";
 import { Button } from "@/components/ui/Button";
+import { Card, CardHeader } from "@/components/ui/Card";
+import { SkeletonText } from "@/components/ui/Skeleton";
 import type { VideoResultsResponse } from "@/lib/types";
 
 export function VideoAnalysisClient({ videoId }: { videoId: string }) {
@@ -39,17 +41,28 @@ export function VideoAnalysisClient({ videoId }: { videoId: string }) {
       <div className="mb-8 flex flex-wrap items-center gap-4">
         <Link href={`/app/videos/${videoId}`}>
           <Button type="button" variant="ghost">
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4" aria-hidden />
             Workspace
           </Button>
         </Link>
-        <h1 className="text-2xl font-semibold text-zinc-50">Analysis results</h1>
+        <div>
+          <h1 className="page-title">Analysis results</h1>
+          <p className="mt-1 font-mono text-xs text-[var(--text-muted)]">{videoId}</p>
+        </div>
       </div>
 
       {loading ? (
-        <p className="text-sm text-zinc-500">Loading results from API…</p>
+        <Card>
+          <CardHeader title="Loading results" />
+          <div className="px-5 py-6">
+            <SkeletonText lines={4} />
+          </div>
+        </Card>
       ) : error ? (
-        <div className="rounded-lg border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
+        <div
+          className="rounded-[var(--radius-lg)] border border-rose-500/30 bg-[var(--error-muted)] px-4 py-4 text-sm text-rose-200"
+          role="alert"
+        >
           {error}
           <div className="mt-3">
             <Button type="button" variant="secondary" onClick={() => void load()}>
